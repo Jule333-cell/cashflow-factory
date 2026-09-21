@@ -1,1 +1,231 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CashFlow Factory — calculateurs financiers gratuits</title><meta name="description" content="Calculateurs gratuits pour épargne, crédit, immobilier, voiture et indépendance financière."><link rel="stylesheet" href="/style.css"></head><body><main class="wrap"><header class="hero"><span class="badge">GRATUIT • SANS INSCRIPTION</span><h1>CashFlow Factory</h1><p>Des calculateurs simples pour comprendre combien ça coûte, combien ça rapporte et combien de temps pour atteindre un objectif.</p></header><section class="grid"><article class="card feature"><h2>🎯 Objectif de revenu</h2><p>Transforme un objectif mensuel en nombre d'actifs nécessaires.</p><div class="form"><label>Objectif mensuel (€)<input id="goal" type="number" value="150"></label><label>Net mensuel par actif (€)<input id="unit" type="number" value="280"></label></div><div class="result"><b id="out">1 actif</b><span>pour viser <strong id="g">150 € / mois</strong></span></div></article><article class="card"><h2>💰 Épargne</h2><p>Projette une épargne régulière dans le temps.</p><a href="/calculators/epargne.html">Calculer →</a></article><article class="card"><h2>📈 Intérêts composés</h2><p>Visualise l'effet du temps et du rendement.</p><a href="/calculators/interets-composes.html">Calculer →</a></article><article class="card"><h2>💳 Crédit</h2><p>Estime mensualité, intérêts et coût total.</p><a href="/calculators/credit.html">Calculer →</a></article><article class="card"><h2>🏠 Immobilier</h2><p>Estime une rentabilité locative simplifiée.</p><a href="/calculators/rentabilite-locative.html">Calculer →</a></article><article class="card"><h2>🚗 Voiture</h2><p>Estime le revenu net d'une voiture louée.</p><a href="/calculators/rentabilite-voiture.html">Calculer →</a></article><article class="card"><h2>🔥 Indépendance financière</h2><p>Relie dépenses mensuelles et capital cible.</p><a href="/calculators/independance-financiere.html">Calculer →</a></article></section><section class="card"><h2>📚 Guides</h2><p>Des explications courtes pour comprendre les chiffres avant de prendre une décision.</p><a href="/guides/">Voir les guides →</a></section><footer>CashFlow Factory · Les simulations sont indicatives et ne constituent pas un conseil financier, fiscal ou juridique.</footer></main><script>const a=document.querySelector('#goal'),b=document.querySelector('#unit'),o=document.querySelector('#out'),g=document.querySelector('#g');function c(){let x=+a.value||0,y=+b.value||0,n=y?Math.ceil(x/y):0;o.textContent=n+(n>1?' actifs':' actif');g.textContent=x.toLocaleString('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0})+' / mois'}a.oninput=b.oninput=c;c()</script></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CashFlow Factory - calculateurs simples pour Ã©pargne, intÃ©rÃªts composÃ©s, crÃ©dit, immobilier, voiture et indÃ©pendance financiÃ¨re.">
+<meta name="keywords" content="calculateur financier, Ã©pargne, intÃ©rÃªts composÃ©s, crÃ©dit, immobilier, voiture, indÃ©pendance financiÃ¨re, financial calculator, compound interest, savings">
+<title>CashFlow Factory â€” Calculateurs financiers</title>
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f4f7fb;color:#172033;line-height:1.5}
+header{background:linear-gradient(135deg,#1457b8,#1976ed);color:#fff;padding:32px 18px 42px}
+.container{max-width:1050px;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.badge{display:inline-block;background:rgba(255,255,255,.18);padding:8px 14px;border-radius:30px;font-weight:800;font-size:13px}
+.lang{border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:9px 12px;font-weight:800;cursor:pointer}
+h1{font-size:clamp(38px,8vw,64px);margin:22px 0 12px;line-height:1.05}
+header p{font-size:clamp(18px,4vw,23px);max-width:760px;margin:0;opacity:.95}
+nav{position:sticky;top:0;z-index:10;background:#fff;box-shadow:0 3px 15px rgba(0,0,0,.08);overflow-x:auto;white-space:nowrap}
+.navinner{display:flex;max-width:1050px;margin:auto}
+nav a{display:inline-block;padding:15px 13px;color:#172033;text-decoration:none;font-weight:750;font-size:14px}
+nav a:hover{color:#1769df}
+main{padding:24px 14px 55px}section{max-width:1050px;margin:0 auto 26px;scroll-margin-top:65px}
+.card{background:#fff;border-radius:20px;padding:23px;box-shadow:0 6px 25px rgba(20,40,80,.08);border:1px solid #e2e7ef}
+.hero-mini{background:linear-gradient(135deg,#eef6ff,#fff);border-color:#dbe8fb}
+h2{font-size:27px;margin:0 0 7px}.subtitle{color:#667085;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}
+label{display:block;font-weight:750;margin-bottom:6px;font-size:14px}
+input{width:100%;padding:14px;border:1px solid #ccd3df;border-radius:12px;font-size:17px;outline:none;margin-bottom:13px}
+input:focus{border-color:#1976ed;box-shadow:0 0 0 3px rgba(25,118,237,.12)}
+button.calc{border:0;background:#1769df;color:#fff;font-size:16px;font-weight:800;padding:13px 20px;border-radius:12px;cursor:pointer}
+button.calc:hover{background:#0f57bf}
+.result{margin-top:17px;padding:16px;border-radius:14px;background:#edf5ff;border-left:5px solid #1976ed;font-size:17px;font-weight:700}
+.big{font-size:29px;color:#125fc9;display:block;margin-top:4px}
+.note{color:#667085;font-size:13px;margin-top:13px}
+footer{background:#172033;color:#dbe2ee;text-align:center;padding:28px 18px;font-size:13px}
+@media(max-width:600px){.top{align-items:flex-start}.lang{padding:8px 10px}header{padding-top:25px}main{padding-left:11px;padding-right:11px}.card{padding:19px}h2{font-size:24px}nav a{padding:13px 10px}}
+</style>
+</head>
+<body>
+
+<header>
+<div class="container">
+<div class="top">
+<span class="badge" data-fr="GRATUIT â€¢ SANS INSCRIPTION" data-en="FREE â€¢ NO SIGN-UP">GRATUIT â€¢ SANS INSCRIPTION</span>
+<button class="lang" onclick="toggleLang()" id="langBtn">ðŸ‡¬ðŸ‡§ EN</button>
+</div>
+<h1>CashFlow Factory</h1>
+<p data-fr="Des calculateurs simples pour comprendre combien Ã§a coÃ»te, combien Ã§a rapporte et combien de temps il faut pour atteindre un objectif."
+data-en="Simple calculators to understand what things cost, what they can earn and how long it may take to reach a goal.">
+Des calculateurs simples pour comprendre combien Ã§a coÃ»te, combien Ã§a rapporte et combien de temps il faut pour atteindre un objectif.</p>
+</div>
+</header>
+
+<nav><div class="navinner">
+<a href="#objectif" data-fr="ðŸŽ¯ Objectif" data-en="ðŸŽ¯ Income Goal">ðŸŽ¯ Objectif</a>
+<a href="#epargne" data-fr="ðŸ’° Ã‰pargne" data-en="ðŸ’° Savings">ðŸ’° Ã‰pargne</a>
+<a href="#interets" data-fr="ðŸ“ˆ IntÃ©rÃªts" data-en="ðŸ“ˆ Compound Interest">ðŸ“ˆ IntÃ©rÃªts</a>
+<a href="#credit" data-fr="ðŸ’³ CrÃ©dit" data-en="ðŸ’³ Loan">ðŸ’³ CrÃ©dit</a>
+<a href="#immobilier" data-fr="ðŸ  Immobilier" data-en="ðŸ  Real Estate">ðŸ  Immobilier</a>
+<a href="#voiture" data-fr="ðŸš— Voiture" data-en="ðŸš— Car">ðŸš— Voiture</a>
+<a href="#independance" data-fr="ðŸ”¥ IndÃ©pendance" data-en="ðŸ”¥ Financial Independence">ðŸ”¥ IndÃ©pendance</a>
+</div></nav>
+
+<main>
+
+<section id="objectif"><div class="card hero-mini">
+<h2 data-fr="ðŸŽ¯ Objectif de revenu" data-en="ðŸŽ¯ Income Goal">ðŸŽ¯ Objectif de revenu</h2>
+<p class="subtitle" data-fr="Estime le capital nÃ©cessaire pour viser un revenu mensuel donnÃ©." data-en="Estimate the capital needed to target a given monthly income.">Estime le capital nÃ©cessaire pour viser un revenu mensuel donnÃ©.</p>
+<div class="grid">
+<div><label data-fr="Revenu mensuel visÃ© (â‚¬)" data-en="Target monthly income (â‚¬)">Revenu mensuel visÃ© (â‚¬)</label><input id="objectifRevenu" type="number" value="150" min="0"></div>
+<div><label data-fr="Rendement annuel estimÃ© (%)" data-en="Estimated annual return (%)">Rendement annuel estimÃ© (%)</label><input id="objectifRendement" type="number" value="5" min="0.01" step="0.1"></div>
+</div>
+<button class="calc" onclick="objectif()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="objectifResult" class="result"></div>
+<p class="note" data-fr="Calcul simplifiÃ© : revenu annuel Ã· rendement annuel. Le rendement rÃ©el peut varier et les frais, impÃ´ts et pertes ne sont pas inclus." data-en="Simplified calculation: annual income Ã· annual return. Actual returns may vary; fees, taxes and losses are not included.">Calcul simplifiÃ© : revenu annuel Ã· rendement annuel. Le rendement rÃ©el peut varier et les frais, impÃ´ts et pertes ne sont pas inclus.</p>
+</div></section>
+
+<section id="epargne"><div class="card">
+<h2 data-fr="ðŸ’° Ã‰pargne" data-en="ðŸ’° Savings">ðŸ’° Ã‰pargne</h2>
+<p class="subtitle" data-fr="Calcule combien tu peux accumuler avec une Ã©pargne rÃ©guliÃ¨re." data-en="Calculate how much you can accumulate with regular savings.">Calcule combien tu peux accumuler avec une Ã©pargne rÃ©guliÃ¨re.</p>
+<div class="grid">
+<div><label data-fr="Capital de dÃ©part (â‚¬)" data-en="Starting capital (â‚¬)">Capital de dÃ©part (â‚¬)</label><input id="epCapital" type="number" value="1000" min="0"></div>
+<div><label data-fr="Ã‰pargne mensuelle (â‚¬)" data-en="Monthly savings (â‚¬)">Ã‰pargne mensuelle (â‚¬)</label><input id="epMensuel" type="number" value="200" min="0"></div>
+<div><label data-fr="DurÃ©e (annÃ©es)" data-en="Duration (years)">DurÃ©e (annÃ©es)</label><input id="epAnnees" type="number" value="5" min="0" step="0.5"></div>
+</div>
+<button class="calc" onclick="epargne()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="epResult" class="result"></div>
+</div></section>
+
+<section id="interets"><div class="card">
+<h2 data-fr="ðŸ“ˆ IntÃ©rÃªts composÃ©s" data-en="ðŸ“ˆ Compound Interest">ðŸ“ˆ IntÃ©rÃªts composÃ©s</h2>
+<p class="subtitle" data-fr="Visualise l'effet des intÃ©rÃªts composÃ©s sur ton capital." data-en="See how compound interest can affect your capital over time.">Visualise l'effet des intÃ©rÃªts composÃ©s sur ton capital.</p>
+<div class="grid">
+<div><label data-fr="Capital initial (â‚¬)" data-en="Initial capital (â‚¬)">Capital initial (â‚¬)</label><input id="icCapital" type="number" value="1000" min="0"></div>
+<div><label data-fr="Versement mensuel (â‚¬)" data-en="Monthly contribution (â‚¬)">Versement mensuel (â‚¬)</label><input id="icMensuel" type="number" value="100" min="0"></div>
+<div><label data-fr="Rendement annuel (%)" data-en="Annual return (%)">Rendement annuel (%)</label><input id="icTaux" type="number" value="7" step="0.1"></div>
+<div><label data-fr="DurÃ©e (annÃ©es)" data-en="Duration (years)">DurÃ©e (annÃ©es)</label><input id="icAnnees" type="number" value="10" min="1"></div>
+</div>
+<button class="calc" onclick="interets()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="icResult" class="result"></div>
+</div></section>
+
+<section id="credit"><div class="card">
+<h2 data-fr="ðŸ’³ CrÃ©dit" data-en="ðŸ’³ Loan">ðŸ’³ CrÃ©dit</h2>
+<p class="subtitle" data-fr="Estime la mensualitÃ© et le coÃ»t total d'un emprunt." data-en="Estimate the monthly payment and total cost of a loan.">Estime la mensualitÃ© et le coÃ»t total d'un emprunt.</p>
+<div class="grid">
+<div><label data-fr="Montant empruntÃ© (â‚¬)" data-en="Loan amount (â‚¬)">Montant empruntÃ© (â‚¬)</label><input id="crCapital" type="number" value="10000" min="0"></div>
+<div><label data-fr="Taux annuel (%)" data-en="Annual interest rate (%)">Taux annuel (%)</label><input id="crTaux" type="number" value="5" step="0.1"></div>
+<div><label data-fr="DurÃ©e (annÃ©es)" data-en="Duration (years)">DurÃ©e (annÃ©es)</label><input id="crAnnees" type="number" value="5" min="1"></div>
+</div>
+<button class="calc" onclick="credit()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="crResult" class="result"></div>
+<p class="note" data-fr="Simulation hors assurance et frais Ã©ventuels." data-en="Simulation excludes insurance and any additional fees.">Simulation hors assurance et frais Ã©ventuels.</p>
+</div></section>
+
+<section id="immobilier"><div class="card">
+<h2 data-fr="ðŸ  Immobilier" data-en="ðŸ  Real Estate">ðŸ  Immobilier</h2>
+<p class="subtitle" data-fr="Estime la rentabilitÃ© brute d'un investissement locatif." data-en="Estimate the gross yield of a rental property investment.">Estime la rentabilitÃ© brute d'un investissement locatif.</p>
+<div class="grid">
+<div><label data-fr="Prix du bien (â‚¬)" data-en="Property price (â‚¬)">Prix du bien (â‚¬)</label><input id="imPrix" type="number" value="100000" min="0"></div>
+<div><label data-fr="Travaux + frais (â‚¬)" data-en="Renovation + fees (â‚¬)">Travaux + frais (â‚¬)</label><input id="imFrais" type="number" value="10000" min="0"></div>
+<div><label data-fr="Loyer mensuel (â‚¬)" data-en="Monthly rent (â‚¬)">Loyer mensuel (â‚¬)</label><input id="imLoyer" type="number" value="600" min="0"></div>
+</div>
+<button class="calc" onclick="immobilier()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="imResult" class="result"></div>
+</div></section>
+
+<section id="voiture"><div class="card">
+<h2 data-fr="ðŸš— Voiture" data-en="ðŸš— Car">ðŸš— Voiture</h2>
+<p class="subtitle" data-fr="Estime le cash-flow mensuel d'une voiture louÃ©e." data-en="Estimate the monthly cash flow of a rental car.">Estime le cash-flow mensuel d'une voiture louÃ©e.</p>
+<div class="grid">
+<div><label data-fr="Prix d'achat (â‚¬)" data-en="Purchase price (â‚¬)">Prix d'achat (â‚¬)</label><input id="voPrix" type="number" value="7000" min="0"></div>
+<div><label data-fr="Revenus mensuels (â‚¬)" data-en="Monthly revenue (â‚¬)">Revenus mensuels (â‚¬)</label><input id="voRevenus" type="number" value="500" min="0"></div>
+<div><label data-fr="Charges mensuelles (â‚¬)" data-en="Monthly costs (â‚¬)">Charges mensuelles (â‚¬)</label><input id="voCharges" type="number" value="150" min="0"></div>
+</div>
+<button class="calc" onclick="voiture()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="voResult" class="result"></div>
+</div></section>
+
+<section id="independance"><div class="card">
+<h2 data-fr="ðŸ”¥ IndÃ©pendance financiÃ¨re" data-en="ðŸ”¥ Financial Independence">ðŸ”¥ IndÃ©pendance financiÃ¨re</h2>
+<p class="subtitle" data-fr="Estime le capital nÃ©cessaire pour couvrir tes dÃ©penses grÃ¢ce Ã  un rendement annuel." data-en="Estimate the capital needed to cover your expenses using an annual return assumption.">Estime le capital nÃ©cessaire pour couvrir tes dÃ©penses grÃ¢ce Ã  un rendement annuel.</p>
+<div class="grid">
+<div><label data-fr="DÃ©penses mensuelles (â‚¬)" data-en="Monthly expenses (â‚¬)">DÃ©penses mensuelles (â‚¬)</label><input id="fiDepenses" type="number" value="2000" min="0"></div>
+<div><label data-fr="Rendement annuel estimÃ© (%)" data-en="Estimated annual return (%)">Rendement annuel estimÃ© (%)</label><input id="fiTaux" type="number" value="5" step="0.1"></div>
+</div>
+<button class="calc" onclick="independance()" data-fr="Calculer â†’" data-en="Calculate â†’">Calculer â†’</button>
+<div id="fiResult" class="result"></div>
+<p class="note" data-fr="ModÃ¨le indicatif : dÃ©penses annuelles Ã· rendement annuel. Il ne tient pas compte de la fiscalitÃ©, de l'inflation ou des variations de rendement." data-en="Illustrative model: annual expenses Ã· annual return. It does not account for taxes, inflation or changing returns.">ModÃ¨le indicatif : dÃ©penses annuelles Ã· rendement annuel. Il ne tient pas compte de la fiscalitÃ©, de l'inflation ou des variations de rendement.</p>
+</div></section>
+
+</main>
+
+<footer><div data-fr="CashFlow Factory Â· Les simulations sont indicatives et ne constituent pas un conseil financier, fiscal ou juridique." data-en="CashFlow Factory Â· Simulations are illustrative and do not constitute financial, tax or legal advice.">CashFlow Factory Â· Les simulations sont indicatives et ne constituent pas un conseil financier, fiscal ou juridique.</div></footer>
+
+<script>
+let lang=localStorage.getItem("cff_lang")||"fr";
+
+function euro(n){
+return new Intl.NumberFormat(lang==="fr"?"fr-FR":"en-US",{style:"currency",currency:"EUR",maximumFractionDigits:0}).format(n);
+}
+function setText(el){
+if(el.dataset[lang]!==undefined) el.textContent=el.dataset[lang];
+}
+function toggleLang(){
+lang=lang==="fr"?"en":"fr";
+localStorage.setItem("cff_lang",lang);
+document.documentElement.lang=lang;
+document.getElementById("langBtn").textContent=lang==="fr"?"ðŸ‡¬ðŸ‡§ EN":"ðŸ‡«ðŸ‡· FR";
+document.querySelectorAll("[data-fr]").forEach(setText);
+objectif();
+epargne();
+interets();
+credit();
+immobilier();
+voiture();
+independance();
+}
+function objectif(){
+const revenu=+document.getElementById("objectifRevenu").value;
+const taux=+document.getElementById("objectifRendement").value;
+const r=document.getElementById("objectifResult");
+if(revenu<=0||taux<=0){r.textContent=lang==="fr"?"Entre des valeurs supÃ©rieures Ã  zÃ©ro.":"Enter values greater than zero.";return}
+const capital=revenu*12/(taux/100);
+r.innerHTML=(lang==="fr"?"Capital estimÃ© : ":"Estimated capital: ")+"<span class='big'>"+euro(capital)+"</span>";
+}
+function epargne(){
+const capital=+document.getElementById("epCapital").value;
+const mensuel=+document.getElementById("epMensuel").value;
+const annees=+document.getElementById("epAnnees").value;
+const total=capital+mensuel*12*annees;
+document.getElementById("epResult").innerHTML=(lang==="fr"?"Capital accumulÃ© : ":"Accumulated capital: ")+"<span class='big'>"+euro(total)+"</span><br><small>"+(lang==="fr"?"Sans rendement ni intÃ©rÃªts.":"Without return or interest.")+"</small>";
+}
+function interets(){
+const capital=+document.getElementById("icCapital").value, mensuel=+document.getElementById("icMensuel").value, taux=+document.getElementById("icTaux").value/100, annees=+document.getElementById("icAnnees").value;
+const mois=annees*12, tm=Math.pow(1+taux,1/12)-1; let total=capital;
+for(let i=0;i<mois;i++) total=total*(1+tm)+mensuel;
+const verse=capital+mensuel*mois, gains=total-verse;
+document.getElementById("icResult").innerHTML=(lang==="fr"?"Capital final : ":"Final capital: ")+"<span class='big'>"+euro(total)+"</span><br>"+(lang==="fr"?"Sommes versÃ©es : ":"Contributions: ")+euro(verse)+"<br>"+(lang==="fr"?"Gains thÃ©oriques : ":"Theoretical gains: ")+euro(gains);
+}
+function credit(){
+const capital=+document.getElementById("crCapital").value, taux=+document.getElementById("crTaux").value/100/12, mois=+document.getElementById("crAnnees").value*12;
+const mensualite=taux===0?capital/mois:capital*taux/(1-Math.pow(1+taux,-mois));
+const total=mensualite*mois, interets=total-capital;
+document.getElementById("crResult").innerHTML=(lang==="fr"?"MensualitÃ© : ":"Monthly payment: ")+"<span class='big'>"+euro(mensualite)+"</span><br>"+(lang==="fr"?"CoÃ»t total : ":"Total cost: ")+euro(total)+"<br>"+(lang==="fr"?"IntÃ©rÃªts : ":"Interest: ")+euro(interets);
+}
+function immobilier(){
+const prix=+document.getElementById("imPrix").value, frais=+document.getElementById("imFrais").value, loyer=+document.getElementById("imLoyer").value;
+const investissement=prix+frais, annuel=loyer*12, rendement=investissement>0?annuel/investissement*100:0;
+document.getElementById("imResult").innerHTML=(lang==="fr"?"Investissement total : ":"Total investment: ")+"<span class='big'>"+euro(investissement)+"</span><br>"+(lang==="fr"?"Loyers annuels : ":"Annual rent: ")+euro(annuel)+"<br>"+(lang==="fr"?"RentabilitÃ© brute : ":"Gross yield: ")+rendement.toFixed(2)+" %";
+}
+function voiture(){
+const prix=+document.getElementById("voPrix").value, revenus=+document.getElementById("voRevenus").value, charges=+document.getElementById("voCharges").value;
+const cash=revenus-charges, annuel=cash*12, rendement=prix>0?annuel/prix*100:0;
+document.getElementById("voResult").innerHTML=(lang==="fr"?"Cash-flow mensuel : ":"Monthly cash flow: ")+"<span class='big'>"+euro(cash)+"</span><br>"+(lang==="fr"?"Cash-flow annuel : ":"Annual cash flow: ")+euro(annuel)+"<br>"+(lang==="fr"?"Rendement thÃ©orique sur achat : ":"Theoretical return on purchase: ")+rendement.toFixed(2)+" %";
+}
+function independance(){
+const depenses=+document.getElementById("fiDepenses").value, taux=+document.getElementById("fiTaux").value;
+const r=document.getElementById("fiResult");
+if(depenses<=0||taux<=0){r.textContent=lang==="fr"?"Entre des valeurs supÃ©rieures Ã  zÃ©ro.":"Enter values greater than zero.";return}
+const capital=depenses*12/(taux/100);
+r.innerHTML=(lang==="fr"?"Capital cible : ":"Target capital: ")+"<span class='big'>"+euro(capital)+"</span><br>"+(lang==="fr"?"Revenu annuel visÃ© : ":"Target annual income: ")+euro(depenses*12);
+}
+
+document.documentElement.lang=lang;
+document.getElementById("langBtn").textContent=lang==="fr"?"ðŸ‡¬ðŸ‡§ EN":"ðŸ‡«ðŸ‡· FR";
+document.querySelectorAll("[data-fr]").forEach(setText);
+objectif();
+</script>
+</body>
+  </html>
