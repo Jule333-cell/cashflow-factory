@@ -166,7 +166,7 @@ function toggleLang(){
 lang=lang==="fr"?"en":"fr";
 localStorage.setItem("cff_lang",lang);
 document.documentElement.lang=lang;
-document.getElementById("langBtn").textContent=lang==="fr"?"&#x1F1EC;&#x1F1E7; EN":"&#x1F1EB;&#x1F1F7; FR";
+document.getElementById("langBtn").innerHTML=lang==="fr"?"&#x1F1EC;&#x1F1E7; EN":"&#x1F1EB;&#x1F1F7; FR";
 document.querySelectorAll("[data-fr]").forEach(setText);
 objectif();
 epargne();
@@ -223,7 +223,7 @@ r.innerHTML=(lang==="fr"?"Capital cible : ":"Target capital: ")+"<span class='bi
 }
 
 document.documentElement.lang=lang;
-document.getElementById("langBtn").textContent=lang==="fr"?"&#x1F1EC;&#x1F1E7; EN":"&#x1F1EB;&#x1F1F7; FR";
+document.getElementById("langBtn").innerHTML=lang==="fr"?"&#x1F1EC;&#x1F1E7; EN":"&#x1F1EB;&#x1F1F7; FR";
 document.querySelectorAll("[data-fr]").forEach(setText);
 objectif();
 </script>
