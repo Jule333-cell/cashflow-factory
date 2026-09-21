@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://jule333-cell.github.io/cashflow-factory/sitemap.xml
