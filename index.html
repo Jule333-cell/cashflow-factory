@@ -42,6 +42,14 @@ button.calc:hover{background:#0f57bf}
 .big{font-size:29px;color:#125fc9;display:block;margin-top:4px}
 .note{color:#667085;font-size:13px;margin-top:13px}
 footer{background:#172033;color:#dbe2ee;text-align:center;padding:28px 18px;font-size:13px}
+.chart-card{margin-top:18px;padding:18px;border:1px solid #dbe5f2;border-radius:16px;background:linear-gradient(180deg,#fbfdff,#f5f9ff)}
+.chart-title{font-size:18px;font-weight:800;margin:0 0 4px}
+.chart-subtitle{color:#667085;font-size:13px;margin:0 0 14px}
+.chart-wrap{width:100%;overflow:hidden}
+.chart-wrap svg{display:block;width:100%;height:auto}
+.chart-legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:13px;color:#475467}
+.legend-item{display:flex;align-items:center;gap:7px}
+.legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 @media(max-width:600px){.top{align-items:flex-start}.lang{padding:8px 10px}header{padding-top:25px}main{padding-left:11px;padding-right:11px}.card{padding:19px}h2{font-size:24px}nav a{padding:13px 10px}}
 </style>
 </head>
@@ -107,6 +115,16 @@ Des calculateurs et simulateurs financiers simples pour comprendre combien ça c
 </div>
 <button class="calc" onclick="interets()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="icResult" class="result"></div>
+<div id="icChartCard" class="chart-card">
+<div class="chart-title" data-fr="📈 Évolution du capital" data-en="📈 Capital growth over time">📈 Évolution du capital</div>
+<p class="chart-subtitle" data-fr="Visualise la différence entre les sommes versées et le capital généré avec les intérêts."
+data-en="See the difference between your contributions and the capital generated with interest.">Visualise la différence entre les sommes versées et le capital généré avec les intérêts.</p>
+<div id="icChart" class="chart-wrap" role="img" aria-label="Graphique de l'évolution du capital"></div>
+<div class="chart-legend">
+<span class="legend-item"><span class="legend-dot" style="background:#1769df"></span><span data-fr="Capital total" data-en="Total capital">Capital total</span></span>
+<span class="legend-item"><span class="legend-dot" style="background:#98a2b3"></span><span data-fr="Sommes versées" data-en="Contributions">Sommes versées</span></span>
+</div>
+</div>
 </div></section>
 
 <section id="credit"><div class="card">
@@ -232,12 +250,64 @@ const annees=+document.getElementById("epAnnees").value;
 const total=capital+mensuel*12*annees;
 document.getElementById("epResult").innerHTML=(lang==="fr"?"Capital accumulé : ":"Accumulated capital: ")+"<span class='big'>"+euro(total)+"</span><br><small>"+(lang==="fr"?"Sans rendement ni intérêts.":"Without return or interest.")+"</small>";
 }
+function formatCompact(n){
+return new Intl.NumberFormat(lang==="fr"?"fr-FR":"en-US",{maximumFractionDigits:0,notation:"compact"}).format(n)+" €";
+}
+function buildCompoundChart(){
+const capital=+document.getElementById("icCapital").value;
+const mensuel=+document.getElementById("icMensuel").value;
+const taux=+document.getElementById("icTaux").value/100;
+const annees=Math.max(1,Math.floor(+document.getElementById("icAnnees").value));
+const mois=annees*12;
+const tm=Math.pow(1+taux,1/12)-1;
+let total=capital;
+const points=[{year:0,total:capital,verse:capital}];
+for(let i=1;i<=mois;i++){
+total=total*(1+tm)+mensuel;
+if(i%12===0 || i===mois) points.push({year:i/12,total:total,verse:capital+mensuel*i});
+}
+const max=Math.max(...points.map(p=>p.total),1);
+const w=760,h=310,left=62,right=18,top=20,bottom=42;
+const iw=w-left-right, ih=h-top-bottom;
+const x=i=>left+(i/(points.length-1))*iw;
+const y=v=>top+(1-v/max)*ih;
+const pathFor=key=>points.map((p,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(p[key]).toFixed(1)).join(" ");
+let grid="";
+for(let g=0;g<=4;g++){
+const val=max*(g/4), yy=y(val);
+grid+="<line x1='"+left+"' y1='"+yy+"' x2='"+(w-right)+"' y2='"+yy+"' stroke='#e4e7ec' stroke-width='1'/>";
+grid+="<text x='"+(left-9)+"' y='"+(yy+4)+"' text-anchor='end' font-size='11' fill='#667085'>"+formatCompact(val)+"</text>";
+}
+let xlabels="";
+points.forEach((p,i)=>{
+if(i===0 || i===points.length-1 || points.length<=7 || i%2===0){
+xlabels+="<text x='"+x(i)+"' y='"+(h-15)+"' text-anchor='middle' font-size='11' fill='#667085'>"+p.year+" "+(lang==="fr"?"an":"yr")+(p.year>1?"s":"")+"</text>";
+}
+});
+const last=points[points.length-1];
+const svg="<svg viewBox='0 0 "+w+" "+h+"' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>"+
+"<rect x='0' y='0' width='"+w+"' height='"+h+"' rx='12' fill='#fff'/>"+
+grid+
+"<path d='"+pathFor("verse")+"' fill='none' stroke='#98a2b3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/>"+
+"<path d='"+pathFor("total")+"' fill='none' stroke='#1769df' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/>"+
+"<circle cx='"+x(points.length-1)+"' cy='"+y(last.total)+"' r='5' fill='#1769df'/>"+
+"<circle cx='"+x(points.length-1)+"' cy='"+y(last.verse)+"' r='5' fill='#98a2b3'/>"+
+xlabels+
+"</svg>";
+document.getElementById("icChart").innerHTML=svg;
+document.getElementById("icChart").setAttribute("aria-label",
+(lang==="fr"?"Graphique : après ":"Chart: after ")+annees+" "+(annees===1?(lang==="fr"?"an":"year"):(lang==="fr"?"ans":"years"))+
+", "+(lang==="fr"?"le capital total est d'environ ":"total capital is about ")+euro(last.total)+
+" "+(lang==="fr"?"contre ":"versus ")+euro(last.verse)+" "+(lang==="fr"?"versés.":"contributed.")
+);
+}
 function interets(){
 const capital=+document.getElementById("icCapital").value, mensuel=+document.getElementById("icMensuel").value, taux=+document.getElementById("icTaux").value/100, annees=+document.getElementById("icAnnees").value;
 const mois=annees*12, tm=Math.pow(1+taux,1/12)-1; let total=capital;
 for(let i=0;i<mois;i++) total=total*(1+tm)+mensuel;
 const verse=capital+mensuel*mois, gains=total-verse;
 document.getElementById("icResult").innerHTML=(lang==="fr"?"Capital final : ":"Final capital: ")+"<span class='big'>"+euro(total)+"</span><br>"+(lang==="fr"?"Sommes versées : ":"Contributions: ")+euro(verse)+"<br>"+(lang==="fr"?"Gains théoriques : ":"Theoretical gains: ")+euro(gains);
+buildCompoundChart();
 }
 function credit(){
 const capital=+document.getElementById("crCapital").value, taux=+document.getElementById("crTaux").value/100/12, mois=+document.getElementById("crAnnees").value*12;
@@ -267,6 +337,7 @@ document.documentElement.lang=lang;
 document.getElementById("langBtn").textContent=lang==="fr"?"🇬🇧 EN":"🇫🇷 FR";
 document.querySelectorAll("[data-fr]").forEach(setText);
 objectif();
+interets();
 </script>
 </body>
 </html>
