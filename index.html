@@ -51,9 +51,15 @@ footer{background:#172033;color:#dbe2ee;text-align:center;padding:28px 18px;font
 .legend-item{display:flex;align-items:center;gap:7px}
 .legend-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
 @media(max-width:600px){.top{align-items:flex-start}.lang{padding:8px 10px}header{padding-top:25px}main{padding-left:11px;padding-right:11px}.card{padding:19px}h2{font-size:24px}nav a{padding:13px 10px}}
+html{scroll-behavior:smooth;}
+.section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.section-heading h2{margin:0;}
+.back-top{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:8px 12px;border-radius:10px;background:#eef4ff;color:#1769df;font-size:14px;font-weight:700;text-decoration:none;border:1px solid #d7e5ff;}
+.back-top:hover{background:#e4efff;}
+@media(max-width:600px){.section-heading{align-items:flex-start;}.back-top{padding:7px 9px;font-size:13px;}}
 </style>
 </head>
-<body>
+<body id="top">
 
 <header>
 <div class="container">
@@ -81,7 +87,10 @@ Des calculateurs et simulateurs financiers simples pour comprendre combien ça c
 <main>
 
 <section id="objectif"><div class="card hero-mini">
+<div class="section-heading">
 <h2 data-fr="&#x1F3AF; Objectif de revenu" data-en="&#x1F3AF; Income Goal">&#x1F3AF; Objectif de revenu</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Estime le capital nécessaire pour viser un revenu mensuel donné." data-en="Estimate the capital needed to target a given monthly income.">Estime le capital nécessaire pour viser un revenu mensuel donné.</p>
 <div class="grid">
 <div><label data-fr="Revenu mensuel visé (€)" data-en="Target monthly income (€)">Revenu mensuel visé (€)</label><input id="objectifRevenu" type="number" value="150" min="0"></div>
@@ -99,7 +108,10 @@ data-en="Compare the capital needed to reach the same income with different retu
 </div></section>
 
 <section id="epargne"><div class="card">
+<div class="section-heading">
 <h2 data-fr="&#x1F4B0; Épargne" data-en="&#x1F4B0; Savings">&#x1F4B0; Épargne</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Calcule combien tu peux accumuler avec une épargne régulière." data-en="Calculate how much you can accumulate with regular savings.">Calcule combien tu peux accumuler avec une épargne régulière.</p>
 <div class="grid">
 <div><label data-fr="Capital de départ (€)" data-en="Starting capital (€)">Capital de départ (€)</label><input id="epCapital" type="number" value="1000" min="0"></div>
@@ -117,7 +129,10 @@ data-en="Visualize how your accumulated savings grow over time.">Visualise la pr
 </div></section>
 
 <section id="interets"><div class="card">
+<div class="section-heading">
 <h2 data-fr="&#x1F4C8; Intérêts composés" data-en="&#x1F4C8; Compound Interest">&#x1F4C8; Intérêts composés</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Visualise l'effet des intérêts composés sur ton capital." data-en="See how compound interest can affect your capital over time.">Visualise l'effet des intérêts composés sur ton capital.</p>
 <div class="grid">
 <div><label data-fr="Capital initial (€)" data-en="Initial capital (€)">Capital initial (€)</label><input id="icCapital" type="number" value="1000" min="0"></div>
@@ -140,7 +155,10 @@ data-en="See the difference between your contributions and the capital generated
 </div></section>
 
 <section id="credit"><div class="card">
+<div class="section-heading">
 <h2 data-fr="&#x1F4B3; Crédit" data-en="&#x1F4B3; Loan">&#x1F4B3; Crédit</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Estime la mensualité et le coût total d'un emprunt." data-en="Estimate the monthly payment and total cost of a loan.">Estime la mensualité et le coût total d'un emprunt.</p>
 <div class="grid">
 <div><label data-fr="Montant emprunté (€)" data-en="Loan amount (€)">Montant emprunté (€)</label><input id="crCapital" type="number" value="10000" min="0"></div>
@@ -159,7 +177,10 @@ data-en="Visualize how the remaining loan balance decreases.">Visualise la baiss
 </div></section>
 
 <section id="immobilier"><div class="card">
+<div class="section-heading">
 <h2 data-fr="&#x1F3E0; Immobilier" data-en="&#x1F3E0; Real Estate">&#x1F3E0; Immobilier</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Estime la rentabilité brute d'un investissement locatif." data-en="Estimate the gross yield of a rental property investment.">Estime la rentabilité brute d'un investissement locatif.</p>
 <div class="grid">
 <div><label data-fr="Prix du bien (€)" data-en="Property price (€)">Prix du bien (€)</label><input id="imPrix" type="number" value="100000" min="0"></div>
@@ -177,7 +198,10 @@ data-en="Simple cumulative rent projection, excluding vacancy, taxes and costs."
 </div></section>
 
 <section id="voiture"><div class="card">
+<div class="section-heading">
 <h2 data-fr="&#x1F697; Voiture" data-en="&#x1F697; Car">&#x1F697; Voiture</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Estime le cash-flow mensuel d'une voiture louée." data-en="Estimate the monthly cash flow of a rental car.">Estime le cash-flow mensuel d'une voiture louée.</p>
 <div class="grid">
 <div><label data-fr="Prix d'achat (€)" data-en="Purchase price (€)">Prix d'achat (€)</label><input id="voPrix" type="number" value="7000" min="0"></div>
@@ -195,7 +219,10 @@ data-en="Visualize the gap between cumulative revenue and costs.">Visualise l'é
 </div></section>
 
 <section id="independance"><div class="card">
+<div class="section-heading">
 <h2 data-fr="&#x1F525; Indépendance financière" data-en="&#x1F525; Financial Independence">&#x1F525; Indépendance financière</h2>
+<a class="back-top" href="#top" data-fr="↑ Sommaire" data-en="↑ Menu">↑ Sommaire</a>
+</div>
 <p class="subtitle" data-fr="Estime le capital nécessaire pour couvrir tes dépenses grâce à un rendement annuel." data-en="Estimate the capital needed to cover your expenses using an annual return assumption.">Estime le capital nécessaire pour couvrir tes dépenses grâce à un rendement annuel.</p>
 <div class="grid">
 <div><label data-fr="Dépenses mensuelles (€)" data-en="Monthly expenses (€)">Dépenses mensuelles (€)</label><input id="fiDepenses" type="number" value="2000" min="0"></div>
