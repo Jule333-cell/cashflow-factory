@@ -89,6 +89,12 @@ Des calculateurs et simulateurs financiers simples pour comprendre combien ça c
 </div>
 <button class="calc" onclick="objectif()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="objectifResult" class="result"></div>
+<div class="chart-card">
+<div class="chart-title" data-fr="📊 Capital nécessaire selon le rendement" data-en="📊 Capital needed by return">📊 Capital nécessaire selon le rendement</div>
+<p class="chart-subtitle" data-fr="Compare le capital nécessaire pour atteindre le même revenu avec différents rendements."
+data-en="Compare the capital needed to reach the same income with different return assumptions.">Compare le capital nécessaire pour atteindre le même revenu avec différents rendements.</p>
+<div id="objectifChart" class="chart-wrap"></div>
+</div>
 <p class="note" data-fr="Calcul simplifié : revenu annuel ÷ rendement annuel. Le rendement réel peut varier et les frais, impôts et pertes ne sont pas inclus." data-en="Simplified calculation: annual income ÷ annual return. Actual returns may vary; fees, taxes and losses are not included.">Calcul simplifié : revenu annuel ÷ rendement annuel. Le rendement réel peut varier et les frais, impôts et pertes ne sont pas inclus.</p>
 </div></section>
 
@@ -102,6 +108,12 @@ Des calculateurs et simulateurs financiers simples pour comprendre combien ça c
 </div>
 <button class="calc" onclick="epargne()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="epResult" class="result"></div>
+<div class="chart-card">
+<div class="chart-title" data-fr="📈 Évolution de l'épargne" data-en="📈 Savings growth">📈 Évolution de l'épargne</div>
+<p class="chart-subtitle" data-fr="Visualise la progression du capital accumulé au fil des années."
+data-en="Visualize how your accumulated savings grow over time.">Visualise la progression du capital accumulé au fil des années.</p>
+<div id="epChart" class="chart-wrap"></div>
+</div>
 </div></section>
 
 <section id="interets"><div class="card">
@@ -137,6 +149,12 @@ data-en="See the difference between your contributions and the capital generated
 </div>
 <button class="calc" onclick="credit()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="crResult" class="result"></div>
+<div class="chart-card">
+<div class="chart-title" data-fr="📉 Capital restant dû" data-en="📉 Remaining loan balance">📉 Capital restant dû</div>
+<p class="chart-subtitle" data-fr="Visualise la baisse du capital restant à rembourser."
+data-en="Visualize how the remaining loan balance decreases.">Visualise la baisse du capital restant à rembourser.</p>
+<div id="crChart" class="chart-wrap"></div>
+</div>
 <p class="note" data-fr="Simulation hors assurance et frais éventuels." data-en="Simulation excludes insurance and any additional fees.">Simulation hors assurance et frais éventuels.</p>
 </div></section>
 
@@ -150,6 +168,12 @@ data-en="See the difference between your contributions and the capital generated
 </div>
 <button class="calc" onclick="immobilier()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="imResult" class="result"></div>
+<div class="chart-card">
+<div class="chart-title" data-fr="🏠 Loyers cumulés vs investissement" data-en="🏠 Cumulative rent vs investment">🏠 Loyers cumulés vs investissement</div>
+<p class="chart-subtitle" data-fr="Projection simple des loyers cumulés, hors vacance, fiscalité et charges."
+data-en="Simple cumulative rent projection, excluding vacancy, taxes and costs.">Projection simple des loyers cumulés, hors vacance, fiscalité et charges.</p>
+<div id="imChart" class="chart-wrap"></div>
+</div>
 </div></section>
 
 <section id="voiture"><div class="card">
@@ -162,6 +186,12 @@ data-en="See the difference between your contributions and the capital generated
 </div>
 <button class="calc" onclick="voiture()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="voResult" class="result"></div>
+<div class="chart-card">
+<div class="chart-title" data-fr="🚗 Revenus cumulés vs charges" data-en="🚗 Cumulative revenue vs costs">🚗 Revenus cumulés vs charges</div>
+<p class="chart-subtitle" data-fr="Visualise l'écart entre les revenus et les charges cumulés."
+data-en="Visualize the gap between cumulative revenue and costs.">Visualise l'écart entre les revenus et les charges cumulés.</p>
+<div id="voChart" class="chart-wrap"></div>
+</div>
 </div></section>
 
 <section id="independance"><div class="card">
@@ -173,6 +203,12 @@ data-en="See the difference between your contributions and the capital generated
 </div>
 <button class="calc" onclick="independance()" data-fr="Calculer →" data-en="Calculate →">Calculer →</button>
 <div id="fiResult" class="result"></div>
+<div class="chart-card">
+<div class="chart-title" data-fr="🔥 Capital cible selon le rendement" data-en="🔥 Target capital by return">🔥 Capital cible selon le rendement</div>
+<p class="chart-subtitle" data-fr="Mesure la sensibilité du capital nécessaire à l'hypothèse de rendement."
+data-en="See how sensitive the required capital is to the return assumption.">Mesure la sensibilité du capital nécessaire à l'hypothèse de rendement.</p>
+<div id="fiChart" class="chart-wrap"></div>
+</div>
 <p class="note" data-fr="Modèle indicatif : dépenses annuelles ÷ rendement annuel. Il ne tient pas compte de la fiscalité, de l'inflation ou des variations de rendement." data-en="Illustrative model: annual expenses ÷ annual return. It does not account for taxes, inflation or changing returns.">Modèle indicatif : dépenses annuelles ÷ rendement annuel. Il ne tient pas compte de la fiscalité, de l'inflation ou des variations de rendement.</p>
 </div></section>
 
@@ -242,6 +278,8 @@ const r=document.getElementById("objectifResult");
 if(revenu<=0||taux<=0){r.textContent=lang==="fr"?"Entre des valeurs supérieures à zéro.":"Enter values greater than zero.";return}
 const capital=revenu*12/(taux/100);
 r.innerHTML=(lang==="fr"?"Capital estimé : ":"Estimated capital: ")+"<span class='big'>"+euro(capital)+"</span>";
+const rates=[2,3,4,5,6,7,8], points=rates.map(rate=>({label:rate+" %",capital:revenu*12/(rate/100)}));
+buildBarChart("objectifChart",points,"label","capital","#1769df");
 }
 function epargne(){
 const capital=+document.getElementById("epCapital").value;
@@ -249,6 +287,53 @@ const mensuel=+document.getElementById("epMensuel").value;
 const annees=+document.getElementById("epAnnees").value;
 const total=capital+mensuel*12*annees;
 document.getElementById("epResult").innerHTML=(lang==="fr"?"Capital accumulé : ":"Accumulated capital: ")+"<span class='big'>"+euro(total)+"</span><br><small>"+(lang==="fr"?"Sans rendement ni intérêts.":"Without return or interest.")+"</small>";
+const points=[{label:"0 "+(lang==="fr"?"an":"yr"),total:capital}];
+for(let i=1;i<=annees;i++) points.push({label:i+" "+(lang==="fr"?"an":"yr")+(i>1?"s":""),total:capital+mensuel*12*i});
+buildLineChart("epChart",points,[{key:"total",label:lang==="fr"?"Capital accumulé":"Accumulated capital",color:"#1769df"}]);
+}
+function buildLineChart(containerId, points, series, xLabel){
+const el=document.getElementById(containerId);
+if(!el||!points.length)return;
+const max=Math.max(...points.flatMap(p=>series.map(s=>p[s.key])),1);
+const w=760,h=310,left=62,right=18,top=20,bottom=42,iw=w-left-right,ih=h-top-bottom;
+const x=i=>points.length===1?left+iw/2:left+(i/(points.length-1))*iw;
+const y=v=>top+(1-v/max)*ih;
+let grid="";
+for(let g=0;g<=4;g++){
+const val=max*g/4,yy=y(val);
+grid+="<line x1='"+left+"' y1='"+yy+"' x2='"+(w-right)+"' y2='"+yy+"' stroke='#e4e7ec' stroke-width='1'/>";
+grid+="<text x='"+(left-9)+"' y='"+(yy+4)+"' text-anchor='end' font-size='11' fill='#667085'>"+formatCompact(val)+"</text>";
+}
+let paths="";
+series.forEach(s=>{paths+="<path d='"+points.map((p,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(p[s.key]).toFixed(1)).join(" ")+"' fill='none' stroke='"+s.color+"' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/>";});
+let labels="";
+points.forEach((p,i)=>{
+if(i===0||i===points.length-1||points.length<=7||i%2===0){
+labels+="<text x='"+x(i)+"' y='"+(h-15)+"' text-anchor='middle' font-size='11' fill='#667085'>"+p.label+"</text>";
+}
+});
+el.innerHTML="<svg viewBox='0 0 "+w+" "+h+"' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><rect width='"+w+"' height='"+h+"' rx='12' fill='#fff'/>"+grid+paths+labels+"</svg>"+
+"<div class='chart-legend'>"+series.map(s=>"<span class='legend-item'><span class='legend-dot' style='background:"+s.color+"'></span>"+s.label+"</span>").join("")+"</div>";
+}
+function buildBarChart(containerId, points, labelKey, valueKey, barColor){
+const el=document.getElementById(containerId);
+if(!el||!points.length)return;
+const max=Math.max(...points.map(p=>p[valueKey]),1);
+const w=760,h=310,left=62,right=18,top=20,bottom=55,iw=w-left-right,ih=h-top-bottom;
+const slot=iw/points.length, bw=Math.min(48,slot*.62);
+const y=v=>top+(1-v/max)*ih;
+let grid="";
+for(let g=0;g<=4;g++){
+const val=max*g/4,yy=y(val);
+grid+="<line x1='"+left+"' y1='"+yy+"' x2='"+(w-right)+"' y2='"+yy+"' stroke='#e4e7ec' stroke-width='1'/>";
+grid+="<text x='"+(left-9)+"' y='"+(yy+4)+"' text-anchor='end' font-size='11' fill='#667085'>"+formatCompact(val)+"</text>";
+}
+let bars="";
+points.forEach((p,i)=>{
+const bx=left+i*slot+(slot-bw)/2, by=y(p[valueKey]), bh=top+ih-by;
+bars+="<rect x='"+bx+"' y='"+by+"' width='"+bw+"' height='"+bh+"' rx='7' fill='"+barColor+"'/><text x='"+(bx+bw/2)+"' y='"+(h-17)+"' text-anchor='middle' font-size='11' fill='#667085'>"+p[labelKey]+"</text>";
+});
+el.innerHTML="<svg viewBox='0 0 "+w+" "+h+"' xmlns='http://www.w3.org/2000/svg' aria-hidden='true'><rect width='"+w+"' height='"+h+"' rx='12' fill='#fff'/>"+grid+bars+"</svg>";
 }
 function formatCompact(n){
 return new Intl.NumberFormat(lang==="fr"?"fr-FR":"en-US",{maximumFractionDigits:0,notation:"compact"}).format(n)+" €";
@@ -314,16 +399,26 @@ const capital=+document.getElementById("crCapital").value, taux=+document.getEle
 const mensualite=taux===0?capital/mois:capital*taux/(1-Math.pow(1+taux,-mois));
 const total=mensualite*mois, interets=total-capital;
 document.getElementById("crResult").innerHTML=(lang==="fr"?"Mensualité : ":"Monthly payment: ")+"<span class='big'>"+euro(mensualite)+"</span><br>"+(lang==="fr"?"Coût total : ":"Total cost: ")+euro(total)+"<br>"+(lang==="fr"?"Intérêts : ":"Interest: ")+euro(interets);
+const rate=+document.getElementById("crTaux").value/100/12;
+let balance=capital, points=[{label:"0 "+(lang==="fr"?"an":"yr"),balance:capital}];
+for(let y=1;y<=Math.ceil(mois/12);y++){for(let m=0;m<12 && (y-1)*12+m<mois;m++) balance=Math.max(0,balance*(1+rate)-mensualite); points.push({label:y+" "+(lang==="fr"?"an":"yr")+(y>1?"s":""),balance:balance});}
+buildLineChart("crChart",points,[{key:"balance",label:lang==="fr"?"Capital restant dû":"Remaining balance",color:"#1769df"}]);
 }
 function immobilier(){
 const prix=+document.getElementById("imPrix").value, frais=+document.getElementById("imFrais").value, loyer=+document.getElementById("imLoyer").value;
 const investissement=prix+frais, annuel=loyer*12, rendement=investissement>0?annuel/investissement*100:0;
 document.getElementById("imResult").innerHTML=(lang==="fr"?"Investissement total : ":"Total investment: ")+"<span class='big'>"+euro(investissement)+"</span><br>"+(lang==="fr"?"Loyers annuels : ":"Annual rent: ")+euro(annuel)+"<br>"+(lang==="fr"?"Rentabilité brute : ":"Gross yield: ")+rendement.toFixed(2)+" %";
+const years=10, points=[{label:"0 "+(lang==="fr"?"an":"yr"),rent:0,invest:investissement}];
+for(let y=1;y<=years;y++) points.push({label:y+" "+(lang==="fr"?"an":"yr")+(y>1?"s":""),rent:annuel*y,invest:investissement});
+buildLineChart("imChart",points,[{key:"rent",label:lang==="fr"?"Loyers cumulés":"Cumulative rent",color:"#1769df"},{key:"invest",label:lang==="fr"?"Investissement":"Investment",color:"#98a2b3"}]);
 }
 function voiture(){
 const prix=+document.getElementById("voPrix").value, revenus=+document.getElementById("voRevenus").value, charges=+document.getElementById("voCharges").value;
 const cash=revenus-charges, annuel=cash*12, rendement=prix>0?annuel/prix*100:0;
 document.getElementById("voResult").innerHTML=(lang==="fr"?"Cash-flow mensuel : ":"Monthly cash flow: ")+"<span class='big'>"+euro(cash)+"</span><br>"+(lang==="fr"?"Cash-flow annuel : ":"Annual cash flow: ")+euro(annuel)+"<br>"+(lang==="fr"?"Rendement théorique sur achat : ":"Theoretical return on purchase: ")+rendement.toFixed(2)+" %";
+const points=[{label:"0 "+(lang==="fr"?"an":"yr"),revenus:0,charges:0}];
+for(let y=1;y<=5;y++) points.push({label:y+" "+(lang==="fr"?"an":"yr")+(y>1?"s":""),revenus:revenus*12*y,charges:charges*12*y});
+buildLineChart("voChart",points,[{key:"revenus",label:lang==="fr"?"Revenus cumulés":"Cumulative revenue",color:"#1769df"},{key:"charges",label:lang==="fr"?"Charges cumulées":"Cumulative costs",color:"#98a2b3"}]);
 }
 function independance(){
 const depenses=+document.getElementById("fiDepenses").value, taux=+document.getElementById("fiTaux").value;
@@ -331,13 +426,20 @@ const r=document.getElementById("fiResult");
 if(depenses<=0||taux<=0){r.textContent=lang==="fr"?"Entre des valeurs supérieures à zéro.":"Enter values greater than zero.";return}
 const capital=depenses*12/(taux/100);
 r.innerHTML=(lang==="fr"?"Capital cible : ":"Target capital: ")+"<span class='big'>"+euro(capital)+"</span><br>"+(lang==="fr"?"Revenu annuel visé : ":"Target annual income: ")+euro(depenses*12);
+const rates=[2,3,4,5,6,7,8], points=rates.map(rate=>({label:rate+" %",capital:depenses*12/(rate/100)}));
+buildBarChart("fiChart",points,"label","capital","#1769df");
 }
 
 document.documentElement.lang=lang;
 document.getElementById("langBtn").textContent=lang==="fr"?"🇬🇧 EN":"🇫🇷 FR";
 document.querySelectorAll("[data-fr]").forEach(setText);
 objectif();
+epargne();
 interets();
+credit();
+immobilier();
+voiture();
+independance();
 </script>
 </body>
 </html>
